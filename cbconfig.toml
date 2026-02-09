@@ -1,13 +1,13 @@
 [AVATARS]
-user = "https://libapps.sjsu.edu/kingbot/app/static/user_icon.png"
-assistant = "https://libapps.sjsu.edu/kingbot/app/static/kingbot_icon.png"
+user = "https://raw.githubusercontent.com/namigabbasov/sundevilchat/main/static/user_icon.png"
+assistant = "https://raw.githubusercontent.com/namigabbasov/sundevilchat/main/static/llm_icon.png"
 
 [ROLES]
 user = "user"
 assistant = "assistant"
 
 [main]
-title = "SunDevil Library Chat 🔱"
+title = "Sun Devil GPT"
 logo = "![Kingbot](./app/static/sundevil.png)"
 
 [side]
@@ -22,11 +22,11 @@ content = "How can I find ASU Library hours?"
 chip = "SC: Hours"
 
 [button2]
-label = "Start Your Research"
-content = "How do I start my research using ASU Library resources?"
+label = "Get Research Help"
+content = "Can you help me get started with research at ASU Library?"
 chip = "SC: ResearchStart"
 
 [button3]
-label = "Borrow A Laptop"
-content = "How do I borrow a laptop from ASU Library"
+label = "Find Library Services"
+content = "What services does ASU Library offer to students and faculty?"
 chip = "SC: BorrowLaptop"
