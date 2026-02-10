@@ -51,7 +51,7 @@ p img{
 def getIndex():
     client = chromadb.PersistentClient(path='./llamachromadb')
     embedding = OpenAIEmbedding(api_key=st.secrets.openai.key)
-    collection = client.get_collection(name="sjsulib")
+    collection = client.get_collection(name="asulib")
     cvstore = ChromaVectorStore(chroma_collection=collection)
     index = VectorStoreIndex.from_vector_store(
         cvstore,
@@ -97,7 +97,7 @@ def getBot(memory):
         memory=memory,
         llm=llm,
         system_prompt=system_prompt,
-        verbose=False,    
+        verbose=True,    
         )
     
     return chat_engine

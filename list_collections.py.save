@@ -1,0 +1,7 @@
+import chromadb
+
+client = chromadb.PersistentClient(path="./llamachromadb")
+
+print("Collections in ChromaDB:")
+for c in client.list_collections():
+    print("-", c.name, c.count())

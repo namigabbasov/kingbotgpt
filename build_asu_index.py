@@ -1,29 +1,34 @@
 import os
 import chromadb
-from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
+from llama_index.core import SimpleDirectoryReader
 from llama_index.embeddings.openai import OpenAIEmbedding
-from llama_index.vector_stores.chroma import ChromaVectorStore
 
-### Load ASU Library text files
+# 1. Load ASU Library documents
 documents = SimpleDirectoryReader("asu_data").load_data()
+texts = [doc.text for doc in documents]
 
-### Create embedding model (API key via env var)
+# 2. Create embedding model
 embed_model = OpenAIEmbedding(api_key=os.getenv("OPENAI_API_KEY"))
 
-### Create Chroma client (same path as the app)
+# 3. Create Chroma client
 client = chromadb.PersistentClient(path="./llamachromadb")
 
-### Create or get ASU collection
-collection = client.get_or_create_collection(name="asulib")
+# 4. Delete ASU collection if it exists (clean slate)
+try:
+    client.delete_collection(name="asulib")
+except:
+    pass
 
-### Wrap Chroma with LlamaIndex
-vector_store = ChromaVectorStore(chroma_collection=collection)
+# 5. Create ASU collection
+collection = client.create_collection(name="asulib")
 
-### Build index from documents
-index = VectorStoreIndex.from_documents(
-    documents,
-    vector_store=vector_store,
-    embed_model=embed_model,
+# 6. Embed text and add to Chroma EXPLICITLY
+embeddings = embed_model.get_text_embedding_batch(texts)
+
+collection.add(
+    documents=texts,
+    embeddings=embeddings,
+    ids=[f"asu_{i}" for i in range(len(texts))]
 )
 
-print("ASU Library vector index built successfully.")
+print(f"✅ Added {len(texts)} ASU documents to Chroma collection 'asulib'")
